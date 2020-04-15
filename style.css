@@ -1,0 +1,103 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+	background-color: #e8b248;
+}
+
+.app {
+    max-width: 968px;
+    margin: 2rem auto;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+form {
+    background: linear-gradient(150deg, #ff7b4f, #dd592d); 
+    color: #efefef;
+    text-align: center;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 10px;
+}
+
+form button,
+li button {
+    display: block;
+    margin: .5rem auto;
+    padding: .5rem 2rem;
+    border-radius: 3px;
+    background-color: #efefef;
+    border: none;
+    border: 1px solid #111;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+form input {
+    padding: .3rem;
+}
+
+ul li p.option-wrapper {
+    color: #111;
+}
+
+form p.option-wrapper label {
+    display: inline-block;
+}
+
+li {
+    background: linear-gradient(90deg, rgb(211, 211, 211), rgb(180, 180, 180));
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 5px;
+    color: #111;
+}
+
+li form.form-currency {
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    text-align: left;
+}
+
+li button {
+    margin: .5rem 0;
+}
+
+h3 {
+    margin-top: 0;
+}
+
+label {
+    display: block;
+    margin: 1rem 0;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0;
+    /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+ul.transactions li {
+    padding: 0;
+    font-size: 0.8rem;
+}
+
+div.view {
+    margin: 1rem 0;
+    text-align: center;
+}
+
+div.view>* {
+    margin: .5rem 0
+}

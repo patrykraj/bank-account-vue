@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Bank</title>
+
+    <link href="style.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div class="app">
+      <form class="formSingup" @submit.prevent>
+        <h1>Create account</h1>
+        <input
+          type="text"
+          name="Name"
+          placeholder="First Name"
+          v-model="name"
+        />
+        <input
+          type="name"
+          name="lastname"
+          placeholder="Last Name"
+          v-model="lastName"
+        />
+        <button v-on:click="addUser">Create</button>
+      </form>
+
+      <form @submit.prevent>
+        <h2>Pay in and pay out from your account</h2>
+        <p class="option-wrapper">
+          I'd like to:
+          <label>
+            <input
+              type="radio"
+              name="option"
+              v-model="selectedOption"
+              v-on:change="handleOption($event)"
+              value="true"
+              checked
+            />
+            Pay in
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="option"
+              v-model="selectedOption"
+              v-on:change="handleOption($event)"
+              value="false"
+            />
+            Pay out
+          </label>
+        </p>
+        <input type="text" placeholder="Account number" v-model="searchAccNr" />
+        <input
+          type="number"
+          id="amount"
+          value="payInValue"
+          v-model="payInValue"
+          placeholder="Value"
+        />
+        <button v-on:click="payIn" v-if="selectedOption">Pay in</button>
+        <button v-on:click="payIn" v-else>Pay out</button>
+      </form>
+
+      <div class="view">
+        <button
+          v-on:click="handleShowUsers"
+          v-if="showUsers && accountList.length"
+        >
+          Hide all accounts
+        </button>
+        <button v-on:click="handleShowUsers" v-else>
+          Show all accounts
+        </button>
+        <button @click="sortByLastName">Sort by last name</button>
+        <input
+          type="text"
+          placeholder="Search by last name"
+          value="searchLastName"
+          v-model="searchLastName"
+          v-on:input="handleSearchByName"
+        />
+      </div>
+
+      <ul>
+        <li v-for="user in accountList" v-if="showUsers">
+          <h3>{{user.name}} {{user.lastName}}</h3>
+          <p>Account number: {{user.number}}</p>
+          <p><strong>Balance:</strong> {{user.amount}} {{user.currency}}</p>
+          <form class="form-currency">
+            <p class="option-wrapper">
+              Convert to (-0.87% fee):
+              <label>
+                <input
+                  type="radio"
+                  name="selectCurrency"
+                  v-on:change="handleCurrency($event, user)"
+                  value="pln"
+                  checked
+                />
+                Polish zloty
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="selectCurrency"
+                  v-on:change="handleCurrency($event, user)"
+                  value="€"
+                />
+                Euro
+              </label>
+            </p>
+          </form>
+          <button @click="showTransactions(user)" v-if="user.showHistory">
+            Hide transaction history
+          </button>
+          <button @click="showTransactions(user)" v-else>
+            Show transaction history
+          </button>
+          <ul class="transactions" v-if="user.showHistory">
+            <li v-for="transaction in user.transactions">
+              {{ transaction }}
+            </li>
+          </ul>
+          <button @click="removeAccount(user)">Usuń konto</button>
+        </li>
+
+        <li v-for="user in filteredList" v-if="filteredList">
+          <h3>{{user.name}} {{user.lastName}}</h3>
+          <p>Account number: {{user.number}}</p>
+          <p>
+            <strong>Dostępne środki:</strong> {{user.amount}} {{user.currency}}
+          </p>
+          <form class="form-currency">
+            <p class="option-wrapper">
+              Convert to:
+              <label>
+                <input
+                  type="radio"
+                  name="selectCurrency"
+                  v-on:change="handleCurrency($event, user)"
+                  value="pln"
+                  checked
+                />
+                Polish zloty
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="selectCurrency"
+                  v-on:change="handleCurrency($event, user)"
+                  value="€"
+                />
+                Euro
+              </label>
+            </p>
+          </form>
+          <button @click="showTransactions(user)" v-if="user.showHistory">
+            Hide transaction history
+          </button>
+          <button @click="showTransactions(user)" v-else>
+            Show transaction history
+          </button>
+          <ul class="transactions" v-if="user.showHistory">
+            <li v-for="transaction in user.transactions">
+              {{ transaction }}
+            </li>
+          </ul>
+          <button @click="removeAccount(user)">Remove account</button>
+        </li>
+      </ul>
+    </div>
+
+    <script src="main.js"></script>
+  </body>
+</html>
